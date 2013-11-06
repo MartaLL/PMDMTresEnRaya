@@ -4,9 +4,15 @@
     <string name="app_name">Tres en raya</string>
     <string name="action_settings">Settings</string>
     <string name="bienvenido">¡¡Bienvenido al Tres en Raya!!</string>
-    <string name="jugar">2 Jugadores</string>
+    <string name="jugar2">2 Jugadores</string>
+    <string name="jugar">1 Jugador</string>
     <string name="title_activity_juego">Tres En Raya</string>
     <string name="reiniciar">Nuevo Juego</string>
     <string name="inicio">Inicio</string>
-   
+    <string name="acercade">Acerca De</string>
+    <string name="title_activity_acerca_de">AcercaDe</string>
+    <string name="acercaD">Juego creado por MartaLL en segundo curso de Desarrollo de Aplicaciones Multiplataforma 2013</string>
+    <string name="title_activity_juego1">Tres En Raya</string>
+    <string name="hello_world">Hello world!</string>
+
 </resources>

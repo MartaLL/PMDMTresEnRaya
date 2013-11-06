@@ -16,14 +16,29 @@ public class MainActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 		
-		Button btnJugar=(Button) findViewById(R.id.btnJugar);
-		btnJugar.setOnClickListener(new OnClickListener(){
+		Button btnJugar1=(Button) findViewById(R.id.btnJugar1);
+		btnJugar1.setOnClickListener(new OnClickListener(){
 			public void onClick(View arg0) {
-				Intent intent=new Intent(MainActivity.this,Juego.class);
+				Intent intent=new Intent(MainActivity.this,Juego1.class);
 				startActivity(intent);
 			}
 		});
 		
+		Button btnJugar2=(Button) findViewById(R.id.btnJugar2);
+		btnJugar2.setOnClickListener(new OnClickListener(){
+			public void onClick(View arg0) {
+				Intent intent=new Intent(MainActivity.this,Juego2.class);
+				startActivity(intent);
+			}
+		});
+		
+		Button btnAcercaDe=(Button) findViewById(R.id.btnAcercaDe);
+		btnAcercaDe.setOnClickListener(new OnClickListener(){
+			public void onClick(View arg0) {
+				Intent intent=new Intent(MainActivity.this,AcercaDe.class);
+				startActivity(intent);
+			}
+		});
 	}
 
 	@Override

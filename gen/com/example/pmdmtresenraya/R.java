@@ -35,7 +35,9 @@ public final class R {
     public static final class id {
         public static final int TableLayout1=0x7f090000;
         public static final int action_settings=0x7f090012;
-        public static final int btnJugar=0x7f09000f;
+        public static final int btnAcercaDe=0x7f090011;
+        public static final int btnJugar1=0x7f090010;
+        public static final int btnJugar2=0x7f09000e;
         public static final int button11=0x7f090002;
         public static final int button12=0x7f090003;
         public static final int button13=0x7f090004;
@@ -45,33 +47,43 @@ public final class R {
         public static final int button31=0x7f09000a;
         public static final int button32=0x7f09000b;
         public static final int button33=0x7f09000c;
-        public static final int imageView1=0x7f09000e;
-        public static final int item1=0x7f090010;
-        public static final int item2=0x7f090011;
+        public static final int imageView1=0x7f09000d;
+        public static final int item1=0x7f090013;
+        public static final int item2=0x7f090014;
         public static final int tableRow1=0x7f090001;
         public static final int tableRow2=0x7f090005;
         public static final int tableRow3=0x7f090009;
-        public static final int textView1=0x7f09000d;
+        public static final int textView1=0x7f09000f;
     }
     public static final class integer {
         public static final int numero=0x7f050000;
     }
     public static final class layout {
-        public static final int activity_juego=0x7f030000;
-        public static final int activity_main=0x7f030001;
+        public static final int activity_acerca_de=0x7f030000;
+        public static final int activity_juego1=0x7f030001;
+        public static final int activity_juego2=0x7f030002;
+        public static final int activity_main=0x7f030003;
     }
     public static final class menu {
-        public static final int juego=0x7f080000;
-        public static final int main=0x7f080001;
+        public static final int acerca_de=0x7f080000;
+        public static final int juego=0x7f080001;
+        public static final int juego1=0x7f080002;
+        public static final int main=0x7f080003;
     }
     public static final class string {
+        public static final int acercaD=0x7f06000a;
+        public static final int acercade=0x7f060008;
         public static final int action_settings=0x7f060001;
         public static final int app_name=0x7f060000;
         public static final int bienvenido=0x7f060002;
-        public static final int inicio=0x7f060006;
-        public static final int jugar=0x7f060003;
-        public static final int reiniciar=0x7f060005;
-        public static final int title_activity_juego=0x7f060004;
+        public static final int hello_world=0x7f06000c;
+        public static final int inicio=0x7f060007;
+        public static final int jugar=0x7f060004;
+        public static final int jugar2=0x7f060003;
+        public static final int reiniciar=0x7f060006;
+        public static final int title_activity_acerca_de=0x7f060009;
+        public static final int title_activity_juego=0x7f060005;
+        public static final int title_activity_juego1=0x7f06000b;
     }
     public static final class style {
         /** 
