@@ -13,6 +13,5 @@
     <string name="title_activity_acerca_de">AcercaDe</string>
     <string name="acercaD">Juego creado por MartaLL en segundo curso de Desarrollo de Aplicaciones Multiplataforma 2013</string>
     <string name="title_activity_juego1">Tres En Raya</string>
-    <string name="hello_world">Hello world!</string>
-
+    <string name="salir">Salir</string>
 </resources>

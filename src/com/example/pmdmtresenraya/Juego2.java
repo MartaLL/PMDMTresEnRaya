@@ -16,14 +16,14 @@ public class Juego2 extends Activity {
 	private int i,j;
 	private int [][] seleccionado;
 	private Button[][] boton;
+	private static final int[] idArrayFilas={1,2,3};
+	private static final int[] idArrayColumnas={1,2,3};
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		tablero();
-		iniciar();
 		if(devolverTurno()==2)
 			turno=1;
-		botonesListener();
 	}
 
 	@Override
@@ -49,37 +49,35 @@ public class Juego2 extends Activity {
 		}	
 	}
 
+	public void dialogoSalir()
+	{
+		AlertDialog.Builder dialogo=new AlertDialog.Builder(this);
+		dialogo.setTitle("Salir");
+		dialogo.setMessage("¿Esta seguro que desea salir?");
+		dialogo.setPositiveButton("Si", new DialogInterface.OnClickListener(){
+			public void onClick(DialogInterface dialog, int which){
+				Juego2.this.finish();
+			}
+		});
+		dialogo.setNegativeButton("No", new DialogInterface.OnClickListener(){
+			public void onClick(DialogInterface dialog, int which){
+				dialog.cancel();
+			}
+		});
+		dialogo.show();
+	}
+
+
 	public void tablero(){
 		setContentView(R.layout.activity_juego2);
 		boton=new Button[3][3];
 		seleccionado=new int[3][3];
-		boton[0][0]=(Button)findViewById(R.id.button11);
-		boton[0][1]=(Button)findViewById(R.id.button12);
-		boton[0][2]=(Button)findViewById(R.id.button13);
-		boton[1][0]=(Button)findViewById(R.id.button21);
-		boton[1][1]=(Button)findViewById(R.id.button22);
-		boton[1][2]=(Button)findViewById(R.id.button23);
-		boton[2][0]=(Button)findViewById(R.id.button31);
-		boton[2][1]=(Button)findViewById(R.id.button32);
-		boton[2][2]=(Button)findViewById(R.id.button33);
-		iniciar();
-		botonesListener();	
-	}
-
-	public void cambiarTurno(){
-		if(turno==1)
-			turno=2;
-		else
-			turno=1;
-	}
-
-	public int devolverTurno(){
-		return turno;
-	}
-
-	public void botonesListener(){
 		for(i=0;i<3;i++){
 			for(j=0;j<3;j++){
+				int a = idArrayFilas[i];
+				int b = idArrayColumnas[j];
+				int botonId = getResources().getIdentifier("button" + a + b , "id", getPackageName());
+				boton[i][j]=(Button)findViewById(botonId);
 				boton[i][j].setOnClickListener(new OnClickListener(){
 					int x = i;
 					int y = j;
@@ -97,101 +95,60 @@ public class Juego2 extends Activity {
 						fin();
 					}
 				});
-			}	
-		}
-	}
-
-	public void iniciar(){
-		for(int i=0;i<3;i++){
-			for(int j=0;j<3;j++){
 				boton[i][j].setBackgroundResource(R.drawable.casilla);
 			}
 		}
 	}
 
+	public void cambiarTurno(){
+		if(turno==1)
+			turno=2;
+		else
+			turno=1;
+	}
+
+	public int devolverTurno(){
+		return turno;
+	}
+
 	public void dialogoGanar(){
 		cambiarTurno();
-		AlertDialog.Builder builder = new AlertDialog.Builder(this);
-		builder.setMessage("Ha ganado el jugador "+devolverTurno())
-		.setTitle("¡¡Enhorabuena!!")
-		.setCancelable(false)
-		.setNeutralButton("Reiniciar Juego",
-				new DialogInterface.OnClickListener() {
+		AlertDialog.Builder dialogo = new AlertDialog.Builder(this);
+		dialogo.setMessage("Ha ganado el jugador "+devolverTurno());
+		dialogo.setTitle("¡¡Enhorabuena!!");
+		dialogo.setCancelable(false);
+		dialogo.setNeutralButton("Reiniciar Juego",new DialogInterface.OnClickListener() {
 			public void onClick(DialogInterface dialog, int id) {
 				dialog.cancel();
 				tablero();
 			}
 		});
-		AlertDialog alert = builder.create();
-		alert.show();
+		dialogo.show();
 	}
-	
+
 	public void fin(){
-		if(seleccionado[0][0]==1&&seleccionado[0][1]==1&&seleccionado[0][2]==1){
+		if((seleccionado[0][0]==1&&seleccionado[0][1]==1&&seleccionado[0][2]==1)||(seleccionado[0][0]==2&seleccionado[0][1]==2&&seleccionado[0][2]==2)||
+			(seleccionado[0][0]==1&seleccionado[1][0]==1&&seleccionado[2][0]==1)||(seleccionado[0][0]==2&seleccionado[1][0]==2&&seleccionado[2][0]==2)||
+			(seleccionado[0][0]==1&seleccionado[1][1]==1&&seleccionado[2][2]==1)||(seleccionado[0][0]==2&seleccionado[1][1]==2&&seleccionado[2][2]==2)||
+			(seleccionado[1][0]==1&seleccionado[1][1]==1&&seleccionado[1][2]==1)||(seleccionado[1][0]==2&seleccionado[1][1]==2&&seleccionado[1][2]==2)||
+			(seleccionado[2][0]==1&seleccionado[2][1]==1&&seleccionado[2][2]==1)||(seleccionado[2][0]==2&seleccionado[2][1]==2&&seleccionado[2][2]==2)||
+			(seleccionado[0][1]==1&seleccionado[1][1]==1&&seleccionado[2][1]==1)||(seleccionado[0][1]==2&seleccionado[1][1]==2&&seleccionado[2][1]==2)||
+			(seleccionado[0][2]==1&seleccionado[1][2]==1&&seleccionado[2][2]==1)||(seleccionado[0][2]==2&seleccionado[1][2]==2&&seleccionado[2][2]==2)||
+			(seleccionado[0][2]==1&seleccionado[1][1]==1&&seleccionado[2][0]==1)||(seleccionado[0][2]==2&seleccionado[1][1]==2&&seleccionado[2][0]==2)){
 			dialogoGanar();
-		}
-		else if(seleccionado[0][0]==2&seleccionado[0][1]==2&&seleccionado[0][2]==2){
-			dialogoGanar();
-		}
-		else if(seleccionado[0][0]==1&seleccionado[1][0]==1&&seleccionado[2][0]==1){
-			dialogoGanar();
-		}
-		else if(seleccionado[0][0]==2&seleccionado[1][0]==2&&seleccionado[2][0]==2){
-			dialogoGanar();
-		}
-		else if(seleccionado[0][0]==1&seleccionado[1][1]==1&&seleccionado[2][2]==1){
-			dialogoGanar();
-		}
-		else if(seleccionado[0][0]==2&seleccionado[1][1]==2&&seleccionado[2][2]==2){
-			dialogoGanar();
-		}
-		else if(seleccionado[1][0]==1&seleccionado[1][1]==1&&seleccionado[1][2]==1){
-			dialogoGanar();
-		}
-		else if(seleccionado[1][0]==2&seleccionado[1][1]==2&&seleccionado[1][2]==2){
-			dialogoGanar();
-		}
-		else if(seleccionado[2][0]==1&seleccionado[2][1]==1&&seleccionado[2][2]==1){
-			dialogoGanar();
-		}
-		else if(seleccionado[2][0]==2&seleccionado[2][1]==2&&seleccionado[2][2]==2){
-			dialogoGanar();
-		}
-		else if(seleccionado[0][1]==1&seleccionado[1][1]==1&&seleccionado[2][1]==1){
-			dialogoGanar();
-		}
-		else if(seleccionado[0][1]==2&seleccionado[1][1]==2&&seleccionado[2][1]==2){
-			dialogoGanar();
-		}
-		else if(seleccionado[0][2]==1&seleccionado[1][2]==1&&seleccionado[2][2]==1){
-			dialogoGanar();
-		}
-		else if(seleccionado[0][2]==2&seleccionado[1][2]==2&&seleccionado[2][2]==2){
-			dialogoGanar();
-		}
-		else if(seleccionado[0][2]==1&seleccionado[1][1]==1&&seleccionado[2][0]==1){
-			dialogoGanar();
-		}
-		else if(seleccionado[0][2]==2&seleccionado[1][1]==2&&seleccionado[2][0]==2){
-			dialogoGanar();
-		}
-		
-		else if(seleccionado[0][0]!=0&&seleccionado[0][1]!=0&&seleccionado[0][2]!=0&&seleccionado[1][0]!=0&&seleccionado[1][1]!=0&&seleccionado[1][2]!=0&&seleccionado[2][0]!=0&&seleccionado[2][1]!=0&&seleccionado[2][2]!=0){
-			AlertDialog.Builder builder = new AlertDialog.Builder(this);
-			builder.setMessage("Empate")
-			.setTitle("¡¡Fin del juego!!")
-			.setCancelable(false)
-			.setNeutralButton("Reiniciar Juego",
-					new DialogInterface.OnClickListener() {
+		}else if(seleccionado[0][0]!=0&&seleccionado[0][1]!=0&&seleccionado[0][2]!=0&&seleccionado[1][0]!=0&&seleccionado[1][1]!=0&&seleccionado[1][2]!=0&&seleccionado[2][0]!=0&&seleccionado[2][1]!=0&&seleccionado[2][2]!=0){
+			AlertDialog.Builder dialogo = new AlertDialog.Builder(this);
+			dialogo.setMessage("Empate");
+			dialogo.setTitle("¡¡Fin del juego!!");
+			dialogo.setCancelable(false);
+			dialogo.setNeutralButton("Reiniciar Juego", new DialogInterface.OnClickListener() {
 				public void onClick(DialogInterface dialog, int id) {
 					dialog.cancel();
 					tablero();
 				}
 			});
-			AlertDialog alert = builder.create();
-			alert.show();
+			dialogo.show();
 		}
-//		00 01 02/00 10 20/00 11 22/10 11 12/20 21 22/01 11 21/02 12 22/02 11 20
 	}
 }
 
