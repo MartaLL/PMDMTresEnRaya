@@ -1,15 +1,22 @@
 package com.example.pmdmtresenraya;
 
 import android.os.Bundle;
+import android.os.Vibrator;
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.Dialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.EditText;
 
 public class Juego1 extends Activity {
 	private int turno=1;
@@ -18,6 +25,7 @@ public class Juego1 extends Activity {
 	private Button[][] boton;
 	private static final int[] idArrayFilas={1,2,3};
 	private static final int[] idArrayColumnas={1,2,3};
+	Dialog dialogo=null;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -49,24 +57,6 @@ public class Juego1 extends Activity {
 		}	
 	}
 	
-	public void dialogoSalir()
-	{
-		AlertDialog.Builder dialogo=new AlertDialog.Builder(this);
-		dialogo.setTitle("Salir");
-		dialogo.setMessage("¿Esta seguro que desea salir?");
-		dialogo.setPositiveButton("Si", new DialogInterface.OnClickListener(){
-			public void onClick(DialogInterface dialog, int which){
-				Juego1.this.finish();
-			}
-		});
-		dialogo.setNegativeButton("No", new DialogInterface.OnClickListener(){
-			public void onClick(DialogInterface dialog, int which){
-				dialog.cancel();
-			}
-		});
-		dialogo.show();
-	}
-
 	public void tablero(){
 		setContentView(R.layout.activity_juego2);
 		boton=new Button[3][3];
@@ -126,17 +116,31 @@ public class Juego1 extends Activity {
 			seleccionado[x][y]=2;
 		}while(seleccionado[x][y]==0);
 	}
-
-	public void dialogoGanar(){
+	
+	public void dialogoGanar()
+	{
 		cambiarTurno();
-		AlertDialog.Builder dialogo = new AlertDialog.Builder(this);
-		dialogo.setMessage("Ha ganado el jugador "+devolverTurno());
-		dialogo.setTitle("¡¡Enhorabuena!!");
+		Vibrator vibra=(Vibrator)getSystemService(Context.VIBRATOR_SERVICE);
+		vibra.vibrate(200);
+		dialogo=new Dialog(this);
 		dialogo.setCancelable(false);
-		dialogo.setNeutralButton("Reiniciar Juego", new DialogInterface.OnClickListener() {
-			public void onClick(DialogInterface dialog, int id) {
-				dialog.cancel();
+		dialogo.setContentView(R.layout.dialogo_layout);
+		Button btnReiniciar=(Button)dialogo.findViewById(R.id.btnReiniciar);
+		btnReiniciar.setOnClickListener(new OnClickListener(){
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				dialogo.dismiss();
 				tablero();
+			}
+		});
+		Button btnMenu=(Button)dialogo.findViewById(R.id.btnMenu);
+		btnMenu.setOnClickListener(new OnClickListener(){
+			public void onClick(View w)
+			{
+				dialogo.dismiss();
+				Intent intent=new Intent(Juego1.this,MainActivity.class);
+				startActivity(intent);
 			}
 		});
 		dialogo.show();
@@ -153,18 +157,37 @@ public class Juego1 extends Activity {
 			(seleccionado[0][2]==1&seleccionado[1][1]==1&&seleccionado[2][0]==1)||(seleccionado[0][2]==2&seleccionado[1][1]==2&&seleccionado[2][0]==2)){
 			dialogoGanar();
 		}else if(seleccionado[0][0]!=0&&seleccionado[0][1]!=0&&seleccionado[0][2]!=0&&seleccionado[1][0]!=0&&seleccionado[1][1]!=0&&seleccionado[1][2]!=0&&seleccionado[2][0]!=0&&seleccionado[2][1]!=0&&seleccionado[2][2]!=0){
-			AlertDialog.Builder dialogo = new AlertDialog.Builder(this);
-			dialogo.setMessage("Empate");
-			dialogo.setTitle("¡¡Fin del juego!!");
-			dialogo.setCancelable(false);
-			dialogo.setNeutralButton("Reiniciar Juego", new DialogInterface.OnClickListener() {
+			Vibrator vibra=(Vibrator)getSystemService(Context.VIBRATOR_SERVICE);
+			vibra.vibrate(200);
+			AlertDialog.Builder dialogoE = new AlertDialog.Builder(this);
+			dialogoE.setMessage("Empate");
+			dialogoE.setTitle("¡¡Fin del juego!!");
+			dialogoE.setCancelable(false);
+			dialogoE.setNeutralButton("Reiniciar Juego", new DialogInterface.OnClickListener() {
 				public void onClick(DialogInterface dialog, int id) {
 					dialog.cancel();
 					tablero();
 				}
 			});
-			dialogo.show();
+			dialogoE.setNegativeButton("Menú Principal", new DialogInterface.OnClickListener() {
+				public void onClick(DialogInterface dialog, int id) {
+					dialog.cancel();
+					Intent intent=new Intent(Juego1.this,MainActivity.class);
+					startActivity(intent);
+				}
+			});
+			dialogoE.show();
 		}
 	}
+	
+	public boolean onKeyDown(int keyCode, KeyEvent event) {
+		if (keyCode == KeyEvent.KEYCODE_BACK) {
+			Juego1.this.finish();
+			// Si el listener devuelve true, significa que el evento esta procesado, y nadie debe hacer nada mas
+			return true;
+		}
+		//para las demas cosas, se reenvia el evento al listener habitual
+		return super.onKeyDown(keyCode, event);
+	} 
 }
 

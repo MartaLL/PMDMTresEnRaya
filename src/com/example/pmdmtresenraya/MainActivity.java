@@ -2,9 +2,11 @@ package com.example.pmdmtresenraya;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Vibrator;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.View;
@@ -12,7 +14,7 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 
 public class MainActivity extends Activity {
-
+//partidas jugadas y partidas ganadas por un usuario determinado
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -41,6 +43,15 @@ public class MainActivity extends Activity {
 				startActivity(intent);
 			}
 		});
+		
+		Button btnEstadisticas=(Button) findViewById(R.id.btnEstadisticas);
+		btnEstadisticas.setOnClickListener(new OnClickListener(){
+			public void onClick(View arg0) {
+				Intent intent=new Intent(MainActivity.this,Estadisticas.class);
+				startActivity(intent);
+			}
+		});
+		
 		Button btnSalir=(Button) findViewById(R.id.btnSalir);
 		btnSalir.setOnClickListener(new OnClickListener(){
 			public void onClick(View arg0) {
@@ -58,6 +69,8 @@ public class MainActivity extends Activity {
 
 	public void dialogoSalir()
 	{
+		Vibrator vibra=(Vibrator)getSystemService(Context.VIBRATOR_SERVICE);
+		vibra.vibrate(200);
 		AlertDialog.Builder dialogo=new AlertDialog.Builder(this);
 		dialogo.setTitle("Salir");
 		dialogo.setMessage("¿Esta seguro que desea salir?");

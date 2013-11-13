@@ -5,16 +5,22 @@
     android:layout_height="match_parent"
     android:background="#B4EEB4"
     android:orientation="horizontal"
+    android:padding="@dimen/Dimension"
     android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/Dimension6"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_vertical_margin"
+    android:paddingTop="@dimen/activity_horizontal_margin"
     tools:context=".Juego2" >
 
-    <TableRow
-        android:id="@+id/tableRow1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" >
+    <LinearLayout
+        android:layout_marginTop="60dp"
+        android:orientation="vertical" >
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_gravity="center">
 
         <Button
             android:id="@+id/button11"
@@ -37,12 +43,13 @@
             android:minHeight="125dip"
             android:minWidth="90dip" />
 
-    </TableRow>
+    	</LinearLayout>
 
-    <TableRow
-        android:id="@+id/tableRow2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" >
+     	<LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_gravity="center">
 
         <Button
             android:id="@+id/button21"
@@ -65,12 +72,13 @@
             android:minHeight="125dip"
             android:minWidth="90dip" />
 
-    </TableRow>
+    	</LinearLayout>
 
-    <TableRow
-        android:id="@+id/tableRow3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" >
+    	<LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_gravity="center">
 
         <Button
             android:id="@+id/button31"
@@ -92,7 +100,9 @@
             android:layout_height="wrap_content"
             android:minHeight="125dip"
             android:minWidth="90dip" />
-
-    </TableRow>
+		
+		</LinearLayout>
+    
+	</LinearLayout>
 
 </TableLayout>
