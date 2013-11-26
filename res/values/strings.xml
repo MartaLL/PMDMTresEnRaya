@@ -8,7 +8,7 @@
     <string name="jugar">Jugar</string>
     <string name="title_activity_juego">Tres En Raya</string>
     <string name="reiniciar">Nuevo Juego</string>
-    <string name="inicio">Inicio</string>
+    <string name="inicio">Menu Principal</string>
     <string name="acercade">Acerca De</string>
     <string name="title_activity_acerca_de">Acerca De</string>
     <string name="acercaD">Juego creado por MartaLL en segundo curso de Desarrollo de Aplicaciones Multiplataforma 2013</string>
@@ -19,6 +19,8 @@
     <string name="aceptar">Aceptar</string>
     <string name="cancelar">Cancelar</string>
     <string name="title_activity_estadisticas">Estadisticas</string>
-    <string name="Estadisticas">Estadisticas</string>
-
+    <string name="Estadisticas">ESTADISTICAS</string>
+	<string name="jugador">Jugador</string>
+	<string name="ganadas">Partidas ganadas</string>
+	<string name="refrescar">Refrescar</string>
 </resources>

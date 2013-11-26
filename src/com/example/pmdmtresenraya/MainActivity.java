@@ -44,14 +44,6 @@ public class MainActivity extends Activity {
 			}
 		});
 		
-		Button btnEstadisticas=(Button) findViewById(R.id.btnEstadisticas);
-		btnEstadisticas.setOnClickListener(new OnClickListener(){
-			public void onClick(View arg0) {
-				Intent intent=new Intent(MainActivity.this,Estadisticas.class);
-				startActivity(intent);
-			}
-		});
-		
 		Button btnSalir=(Button) findViewById(R.id.btnSalir);
 		btnSalir.setOnClickListener(new OnClickListener(){
 			public void onClick(View arg0) {

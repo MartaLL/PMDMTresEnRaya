@@ -54,13 +54,4 @@
         android:minHeight="45dip"
         android:text="@string/jugar2" />
 
-    <Button
-        android:id="@+id/btnEstadisticas"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/btnAcercaDe"
-        android:layout_centerHorizontal="true"
-        android:background="@drawable/custom_button"
-        android:text="@string/est" />
-
 </RelativeLayout>

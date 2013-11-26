@@ -21,13 +21,14 @@ import android.widget.TextView;
 
 public class Juego2 extends Activity {
 	private int turno=1;
-	private int i,j;
+	private int i,j,ganaO,ganaX,jugadas;
 	private int [][] seleccionado;
 	private Button[][] boton;
 	private static final int[] idArrayFilas={1,2,3};
 	private static final int[] idArrayColumnas={1,2,3};
-	Dialog dialogo=null;
+	private Dialog dialogo=null;
 	@Override
+	
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		tablero();
@@ -60,6 +61,7 @@ public class Juego2 extends Activity {
 
 	public void tablero(){
 		setContentView(R.layout.activity_juego2);
+		jugadas+=1;
 		boton=new Button[3][3];
 		seleccionado=new int[3][3];
 		for(i=0;i<3;i++){
@@ -100,6 +102,46 @@ public class Juego2 extends Activity {
 	public int devolverTurno(){
 		return turno;
 	}
+
+	public void fin(){
+		if((seleccionado[0][0]==1&&seleccionado[0][1]==1&&seleccionado[0][2]==1)||(seleccionado[0][0]==1&seleccionado[1][0]==1&&seleccionado[2][0]==1)||
+				(seleccionado[0][0]==1&seleccionado[1][1]==1&&seleccionado[2][2]==1)||(seleccionado[1][0]==1&seleccionado[1][1]==1&&seleccionado[1][2]==1)||
+				(seleccionado[2][0]==1&seleccionado[2][1]==1&&seleccionado[2][2]==1)||(seleccionado[0][1]==1&seleccionado[1][1]==1&&seleccionado[2][1]==1)||
+				(seleccionado[0][2]==1&seleccionado[1][2]==1&&seleccionado[2][2]==1)||(seleccionado[0][2]==1&seleccionado[1][1]==1&&seleccionado[2][0]==1)){
+			dialogoGanar();
+			ganaO=ganaO+1;
+		}else if((seleccionado[0][0]==2&seleccionado[0][1]==2&&seleccionado[0][2]==2)||(seleccionado[0][0]==2&seleccionado[1][0]==2&&seleccionado[2][0]==2)||
+				(seleccionado[0][0]==2&seleccionado[1][1]==2&&seleccionado[2][2]==2)||(seleccionado[1][0]==2&seleccionado[1][1]==2&&seleccionado[1][2]==2)||
+				(seleccionado[2][0]==2&seleccionado[2][1]==2&&seleccionado[2][2]==2)||(seleccionado[0][1]==2&seleccionado[1][1]==2&&seleccionado[2][1]==2)||
+				(seleccionado[0][2]==2&seleccionado[1][2]==2&&seleccionado[2][2]==2)||(seleccionado[0][2]==2&seleccionado[1][1]==2&&seleccionado[2][0]==2)){
+			dialogoGanar();
+			ganaX=ganaX+1;
+		}else if(seleccionado[0][0]!=0&&seleccionado[0][1]!=0&&seleccionado[0][2]!=0&&seleccionado[1][0]!=0&&seleccionado[1][1]!=0&&seleccionado[1][2]!=0&&seleccionado[2][0]!=0&&seleccionado[2][1]!=0&&seleccionado[2][2]!=0){
+			Vibrator vibra=(Vibrator)getSystemService(Context.VIBRATOR_SERVICE);
+			vibra.vibrate(200);
+			dialogo=new Dialog(this);
+			dialogo.setCancelable(false);
+			dialogo.setTitle("Â¡Â¡EMPATE!!");
+			dialogo.setContentView(R.layout.empate_layout);
+			Button btnReiniciar=(Button)dialogo.findViewById(R.id.btnReiniciarE);
+			btnReiniciar.setOnClickListener(new OnClickListener(){
+				@Override
+				public void onClick(View v) {
+					dialogo.dismiss();
+					tablero();
+				}
+			});
+			Button btnMenu=(Button)dialogo.findViewById(R.id.btnMenuE);
+			btnMenu.setOnClickListener(new OnClickListener(){
+				public void onClick(View w)
+				{
+					dialogo.dismiss();
+					Juego2.this.finish();
+				}
+			});
+			dialogo.show();
+		}
+	}
 	
 	public void dialogoGanar()
 	{
@@ -108,12 +150,15 @@ public class Juego2 extends Activity {
 		vibra.vibrate(200);
 		dialogo=new Dialog(this);
 		dialogo.setCancelable(false);
-		dialogo.setContentView(R.layout.dialogo_layout);
+		dialogo.setTitle("Â¡Â¡HA GANADO!!");
+		dialogo.setContentView(R.layout.ganar_layout);
+		SharedPreferences pref=getSharedPreferences("datos",Context.MODE_PRIVATE);
+		TextView estadisticas=(TextView)dialogo.findViewById(R.id.textView1);
+		estadisticas.setText(pref.getString("ganaO", "")+pref.getString("jugadas", "")+"\n"+pref.getString("ganaX", "")+pref.getString("jugadas", ""));
 		Button btnReiniciar=(Button)dialogo.findViewById(R.id.btnReiniciar);
 		btnReiniciar.setOnClickListener(new OnClickListener(){
 			@Override
 			public void onClick(View v) {
-				// TODO Auto-generated method stub
 				dialogo.dismiss();
 				tablero();
 			}
@@ -123,45 +168,16 @@ public class Juego2 extends Activity {
 			public void onClick(View w)
 			{
 				dialogo.dismiss();
-				Intent intent=new Intent(Juego2.this,MainActivity.class);
-				startActivity(intent);
+				Juego2.this.finish();
 			}
 		});
+		SharedPreferences prefe=getSharedPreferences("datos",Context.MODE_PRIVATE);
+		Editor editor=prefe.edit();
+		editor.putString("ganaO","El jugador O ha ganado "+ganaO);
+		editor.putString("ganaX","El jugador X ha ganado "+ganaX);
+		editor.putString("jugadas"," en "+jugadas+" jugadas");
+		editor.commit();
 		dialogo.show();
-	}
-	
-	public void fin(){
-		if((seleccionado[0][0]==1&&seleccionado[0][1]==1&&seleccionado[0][2]==1)||(seleccionado[0][0]==2&seleccionado[0][1]==2&&seleccionado[0][2]==2)||
-				(seleccionado[0][0]==1&seleccionado[1][0]==1&&seleccionado[2][0]==1)||(seleccionado[0][0]==2&seleccionado[1][0]==2&&seleccionado[2][0]==2)||
-				(seleccionado[0][0]==1&seleccionado[1][1]==1&&seleccionado[2][2]==1)||(seleccionado[0][0]==2&seleccionado[1][1]==2&&seleccionado[2][2]==2)||
-				(seleccionado[1][0]==1&seleccionado[1][1]==1&&seleccionado[1][2]==1)||(seleccionado[1][0]==2&seleccionado[1][1]==2&&seleccionado[1][2]==2)||
-				(seleccionado[2][0]==1&seleccionado[2][1]==1&&seleccionado[2][2]==1)||(seleccionado[2][0]==2&seleccionado[2][1]==2&&seleccionado[2][2]==2)||
-				(seleccionado[0][1]==1&seleccionado[1][1]==1&&seleccionado[2][1]==1)||(seleccionado[0][1]==2&seleccionado[1][1]==2&&seleccionado[2][1]==2)||
-				(seleccionado[0][2]==1&seleccionado[1][2]==1&&seleccionado[2][2]==1)||(seleccionado[0][2]==2&seleccionado[1][2]==2&&seleccionado[2][2]==2)||
-				(seleccionado[0][2]==1&seleccionado[1][1]==1&&seleccionado[2][0]==1)||(seleccionado[0][2]==2&seleccionado[1][1]==2&&seleccionado[2][0]==2)){
-			dialogoGanar();
-		}else if(seleccionado[0][0]!=0&&seleccionado[0][1]!=0&&seleccionado[0][2]!=0&&seleccionado[1][0]!=0&&seleccionado[1][1]!=0&&seleccionado[1][2]!=0&&seleccionado[2][0]!=0&&seleccionado[2][1]!=0&&seleccionado[2][2]!=0){
-			Vibrator vibra=(Vibrator)getSystemService(Context.VIBRATOR_SERVICE);
-			vibra.vibrate(200);
-			AlertDialog.Builder dialogoE = new AlertDialog.Builder(this);
-			dialogoE.setMessage("Empate");
-			dialogoE.setTitle("¡¡Fin del juego!!");
-			dialogoE.setCancelable(false);
-			dialogoE.setNeutralButton("Reiniciar Juego", new DialogInterface.OnClickListener() {
-				public void onClick(DialogInterface dialog, int id) {
-					dialog.cancel();
-					tablero();
-				}
-			});
-			dialogoE.setNegativeButton("Menú Principal", new DialogInterface.OnClickListener() {
-				public void onClick(DialogInterface dialog, int id) {
-					dialog.cancel();
-					Intent intent=new Intent(Juego2.this,MainActivity.class);
-					startActivity(intent);
-				}
-			});
-			dialogoE.show();
-		}
 	}
 
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
