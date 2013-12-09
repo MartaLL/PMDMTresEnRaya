@@ -28,12 +28,9 @@ public class Juego2 extends Activity {
 	private static final int[] idArrayColumnas={1,2,3};
 	private Dialog dialogo=null;
 	@Override
-	
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		tablero();
-		if(devolverTurno()==2)
-			turno=1;
 	}
 
 	@Override
@@ -108,14 +105,14 @@ public class Juego2 extends Activity {
 				(seleccionado[0][0]==1&seleccionado[1][1]==1&&seleccionado[2][2]==1)||(seleccionado[1][0]==1&seleccionado[1][1]==1&&seleccionado[1][2]==1)||
 				(seleccionado[2][0]==1&seleccionado[2][1]==1&&seleccionado[2][2]==1)||(seleccionado[0][1]==1&seleccionado[1][1]==1&&seleccionado[2][1]==1)||
 				(seleccionado[0][2]==1&seleccionado[1][2]==1&&seleccionado[2][2]==1)||(seleccionado[0][2]==1&seleccionado[1][1]==1&&seleccionado[2][0]==1)){
+			ganaO+=1;
 			dialogoGanar();
-			ganaO=ganaO+1;
 		}else if((seleccionado[0][0]==2&seleccionado[0][1]==2&&seleccionado[0][2]==2)||(seleccionado[0][0]==2&seleccionado[1][0]==2&&seleccionado[2][0]==2)||
 				(seleccionado[0][0]==2&seleccionado[1][1]==2&&seleccionado[2][2]==2)||(seleccionado[1][0]==2&seleccionado[1][1]==2&&seleccionado[1][2]==2)||
 				(seleccionado[2][0]==2&seleccionado[2][1]==2&&seleccionado[2][2]==2)||(seleccionado[0][1]==2&seleccionado[1][1]==2&&seleccionado[2][1]==2)||
 				(seleccionado[0][2]==2&seleccionado[1][2]==2&&seleccionado[2][2]==2)||(seleccionado[0][2]==2&seleccionado[1][1]==2&&seleccionado[2][0]==2)){
+			ganaX+=1;
 			dialogoGanar();
-			ganaX=ganaX+1;
 		}else if(seleccionado[0][0]!=0&&seleccionado[0][1]!=0&&seleccionado[0][2]!=0&&seleccionado[1][0]!=0&&seleccionado[1][1]!=0&&seleccionado[1][2]!=0&&seleccionado[2][0]!=0&&seleccionado[2][1]!=0&&seleccionado[2][2]!=0){
 			Vibrator vibra=(Vibrator)getSystemService(Context.VIBRATOR_SERVICE);
 			vibra.vibrate(200);
@@ -152,6 +149,12 @@ public class Juego2 extends Activity {
 		dialogo.setCancelable(false);
 		dialogo.setTitle("¡¡HA GANADO!!");
 		dialogo.setContentView(R.layout.ganar_layout);
+		SharedPreferences prefe=getSharedPreferences("datos",Context.MODE_PRIVATE);
+		Editor editor=prefe.edit();
+		editor.putString("ganaO","El jugador O ha ganado "+ganaO);
+		editor.putString("ganaX","El jugador X ha ganado "+ganaX);
+		editor.putString("jugadas"," en "+jugadas+" jugadas");
+		editor.commit();
 		SharedPreferences pref=getSharedPreferences("datos",Context.MODE_PRIVATE);
 		TextView estadisticas=(TextView)dialogo.findViewById(R.id.textView1);
 		estadisticas.setText(pref.getString("ganaO", "")+pref.getString("jugadas", "")+"\n"+pref.getString("ganaX", "")+pref.getString("jugadas", ""));
@@ -171,12 +174,6 @@ public class Juego2 extends Activity {
 				Juego2.this.finish();
 			}
 		});
-		SharedPreferences prefe=getSharedPreferences("datos",Context.MODE_PRIVATE);
-		Editor editor=prefe.edit();
-		editor.putString("ganaO","El jugador O ha ganado "+ganaO);
-		editor.putString("ganaX","El jugador X ha ganado "+ganaX);
-		editor.putString("jugadas"," en "+jugadas+" jugadas");
-		editor.commit();
 		dialogo.show();
 	}
 

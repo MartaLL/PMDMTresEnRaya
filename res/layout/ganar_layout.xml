@@ -34,13 +34,13 @@
         android:id="@+id/textView1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentRight="true"
         android:layout_below="@+id/textView2"
         android:background="#F5FFFA"
+        android:lines="3"
         android:textColor="#006400"
-        android:textSize="12dp"
+        android:textSize="18sp"
         android:textStyle="italic" />
 
     <TextView
@@ -56,7 +56,7 @@
         android:padding="10dp"
         android:text="@string/Estadisticas"
         android:textColor="#006400"
-        android:textSize="20dp"
+        android:textSize="20sp"
         android:textStyle="bold" />
 
 </RelativeLayout>

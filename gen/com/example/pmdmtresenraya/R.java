@@ -79,29 +79,24 @@ public final class R {
         public static final int main=0x7f080004;
     }
     public static final class string {
-        public static final int Estadisticas=0x7f060012;
-        public static final int aceptar=0x7f06000f;
+        public static final int Estadisticas=0x7f060010;
+        public static final int aceptar=0x7f06000e;
         public static final int acercaD=0x7f06000a;
         public static final int acercade=0x7f060008;
         public static final int action_settings=0x7f060001;
         public static final int app_name=0x7f060000;
         public static final int bienvenido=0x7f060002;
-        public static final int cancelar=0x7f060010;
+        public static final int cancelar=0x7f06000f;
         public static final int est=0x7f06000d;
-        public static final int ganadas=0x7f060014;
-        public static final int ganador=0x7f06000e;
         public static final int inicio=0x7f060007;
-        public static final int jugador=0x7f060013;
         public static final int jugar=0x7f060004;
         public static final int jugar2=0x7f060003;
-        public static final int refrescar=0x7f060015;
         public static final int reiniciar=0x7f060006;
         public static final int salir=0x7f06000c;
         public static final int title_activity_acerca_de=0x7f060009;
-        public static final int title_activity_estadisticas=0x7f060011;
         public static final int title_activity_juego=0x7f060005;
         public static final int title_activity_juego1=0x7f06000b;
-        public static final int tres_en_raya=0x7f060016;
+        public static final int tres_en_raya=0x7f060011;
     }
     public static final class style {
         /** 

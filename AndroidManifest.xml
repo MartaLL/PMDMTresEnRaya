@@ -36,10 +36,6 @@
             android:name="com.example.pmdmtresenraya.Juego1"
             android:label="@string/title_activity_juego1" >
         </activity>
-        <activity
-            android:name="com.example.pmdmtresenraya.Estadisticas"
-            android:label="@string/title_activity_estadisticas" >
-        </activity>
     </application>
 
 </manifest>

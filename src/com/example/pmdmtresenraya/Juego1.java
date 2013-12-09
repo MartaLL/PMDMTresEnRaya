@@ -3,10 +3,8 @@ package com.example.pmdmtresenraya;
 import android.os.Bundle;
 import android.os.Vibrator;
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
@@ -30,9 +28,8 @@ public class Juego1 extends Activity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		ganaO=0;ganaX=0;jugadas=0;
 		tablero();
-		if(devolverTurno()==2)
-			turno=1;
 	}
 
 	@Override
@@ -90,8 +87,6 @@ public class Juego1 extends Activity {
 				boton[i][j].setBackgroundResource(R.drawable.casilla);
 			}
 		}
-		if(devolverTurno()==2)
-			turno=1;
 	}
 
 	public void cambiarTurno(){
@@ -113,46 +108,46 @@ public class Juego1 extends Activity {
 		aleatorioB=(int) (Math.random()*b.length+0);
 		x=a[aleatorioA];
 		y=b[aleatorioB];
-		if(seleccionado[x][y]==0){
+		if(boton[x][y].isEnabled()==true){
 			boton[x][y].setBackgroundResource(R.drawable.cruz);
 			seleccionado[x][y]=2;
+			boton[x][y].setEnabled(false);
 		}else{
 			aleatorioA= (int) (Math.random()*a.length+0);
 			aleatorioB=(int) (Math.random()*b.length+0);
 			w=a[aleatorioA];
 			z=b[aleatorioB];
-			if(seleccionado[w][z]==0&&(w!=x||z!=y)){
+			if(boton[w][z].isEnabled()==true&&boton[w][z]!=boton[x][y]){
 				boton[w][z].setBackgroundResource(R.drawable.cruz);
-				seleccionado[w][z]=2;	
-			}
-			else{
+				seleccionado[w][z]=2;
+				boton[w][z].setEnabled(false);
+			}else{
 				aleatorioA= (int) (Math.random()*a.length+0);
 				aleatorioB=(int) (Math.random()*b.length+0);
 				u=a[aleatorioA];
 				v=b[aleatorioB];
-				if(seleccionado[u][v]==0&&(u!=w||v!=z)){
+				if(boton[u][v].isEnabled()==true&&boton[u][v]!=boton[w][z]){
 					boton[u][v].setBackgroundResource(R.drawable.cruz);
-					seleccionado[u][v]=2;	
+					seleccionado[u][v]=2;
+					boton[u][v].setEnabled(false);
 				}
 			}
 		}
 	}
-
-	
 
 	public void fin(){
 		if((seleccionado[0][0]==1&&seleccionado[0][1]==1&&seleccionado[0][2]==1)||(seleccionado[0][0]==1&seleccionado[1][0]==1&&seleccionado[2][0]==1)||
 				(seleccionado[0][0]==1&seleccionado[1][1]==1&&seleccionado[2][2]==1)||(seleccionado[1][0]==1&seleccionado[1][1]==1&&seleccionado[1][2]==1)||
 				(seleccionado[2][0]==1&seleccionado[2][1]==1&&seleccionado[2][2]==1)||(seleccionado[0][1]==1&seleccionado[1][1]==1&&seleccionado[2][1]==1)||
 				(seleccionado[0][2]==1&seleccionado[1][2]==1&&seleccionado[2][2]==1)||(seleccionado[0][2]==1&seleccionado[1][1]==1&&seleccionado[2][0]==1)){
+			ganaO+=1;
 			dialogoGanar();
-			ganaO=ganaO+1;
 		}else if((seleccionado[0][0]==2&seleccionado[0][1]==2&&seleccionado[0][2]==2)||(seleccionado[0][0]==2&seleccionado[1][0]==2&&seleccionado[2][0]==2)||
 				(seleccionado[0][0]==2&seleccionado[1][1]==2&&seleccionado[2][2]==2)||(seleccionado[1][0]==2&seleccionado[1][1]==2&&seleccionado[1][2]==2)||
 				(seleccionado[2][0]==2&seleccionado[2][1]==2&&seleccionado[2][2]==2)||(seleccionado[0][1]==2&seleccionado[1][1]==2&&seleccionado[2][1]==2)||
 				(seleccionado[0][2]==2&seleccionado[1][2]==2&&seleccionado[2][2]==2)||(seleccionado[0][2]==2&seleccionado[1][1]==2&&seleccionado[2][0]==2)){
+			ganaX+=1;
 			dialogoGanar();
-			ganaX=ganaX+1;
 		}else if(seleccionado[0][0]!=0&&seleccionado[0][1]!=0&&seleccionado[0][2]!=0&&seleccionado[1][0]!=0&&seleccionado[1][1]!=0&&seleccionado[1][2]!=0&&seleccionado[2][0]!=0&&seleccionado[2][1]!=0&&seleccionado[2][2]!=0){
 			Vibrator vibra=(Vibrator)getSystemService(Context.VIBRATOR_SERVICE);
 			vibra.vibrate(200);
@@ -179,7 +174,7 @@ public class Juego1 extends Activity {
 			dialogo.show();
 		}
 	}
-	
+
 	public void dialogoGanar()
 	{
 		cambiarTurno();
@@ -189,6 +184,12 @@ public class Juego1 extends Activity {
 		dialogo.setCancelable(false);
 		dialogo.setTitle("¡¡HA GANADO!!");
 		dialogo.setContentView(R.layout.ganar_layout);
+		SharedPreferences prefe=getSharedPreferences("datos",Context.MODE_PRIVATE);
+		Editor editor=prefe.edit();
+		editor.putString("ganaO","El jugador O ha ganado "+ganaO);
+		editor.putString("ganaX","El jugador X ha ganado "+ganaX);
+		editor.putString("jugadas"," en "+jugadas+" jugadas");
+		editor.commit();
 		SharedPreferences pref=getSharedPreferences("datos",Context.MODE_PRIVATE);
 		TextView estadisticas=(TextView)dialogo.findViewById(R.id.textView1);
 		estadisticas.setText(pref.getString("ganaO", "")+pref.getString("jugadas", "")+"\n"+pref.getString("ganaX", "")+pref.getString("jugadas", ""));
@@ -208,15 +209,9 @@ public class Juego1 extends Activity {
 				Juego1.this.finish();
 			}
 		});
-		SharedPreferences prefe=getSharedPreferences("datos",Context.MODE_PRIVATE);
-		Editor editor=prefe.edit();
-		editor.putString("ganaO","El jugador O ha ganado "+ganaO);
-		editor.putString("ganaX","El jugador X ha ganado "+ganaX);
-		editor.putString("jugadas"," en "+jugadas+" jugadas");
-		editor.commit();
 		dialogo.show();
 	}
-	
+
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
 		if (keyCode == KeyEvent.KEYCODE_BACK) {
 			Juego1.this.finish();

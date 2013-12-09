@@ -14,7 +14,6 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 
 public class MainActivity extends Activity {
-//partidas jugadas y partidas ganadas por un usuario determinado
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -23,6 +22,7 @@ public class MainActivity extends Activity {
 		Button btnJugar1=(Button) findViewById(R.id.btnJugar1);
 		btnJugar1.setOnClickListener(new OnClickListener(){
 			public void onClick(View arg0) {
+				
 				Intent intent=new Intent(MainActivity.this,Juego1.class);
 				startActivity(intent);
 			}
