@@ -28,7 +28,6 @@ public class Juego1 extends Activity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		ganaO=0;ganaX=0;jugadas=0;
 		tablero();
 	}
 
@@ -103,35 +102,103 @@ public class Juego1 extends Activity {
 	public void aleatorio(){
 		int [] a={0,1,2};
 		int [] b={0,1,2};
-		int aleatorioA,aleatorioB,x,y,w,z,u,v;
+		int aleatorioA,aleatorioB,x,y;
 		aleatorioA= (int) (Math.random()*a.length+0);
 		aleatorioB=(int) (Math.random()*b.length+0);
 		x=a[aleatorioA];
 		y=b[aleatorioB];
-		if(boton[x][y].isEnabled()==true){
-			boton[x][y].setBackgroundResource(R.drawable.cruz);
-			seleccionado[x][y]=2;
-			boton[x][y].setEnabled(false);
-		}else{
-			aleatorioA= (int) (Math.random()*a.length+0);
-			aleatorioB=(int) (Math.random()*b.length+0);
-			w=a[aleatorioA];
-			z=b[aleatorioB];
-			if(boton[w][z].isEnabled()==true&&boton[w][z]!=boton[x][y]){
-				boton[w][z].setBackgroundResource(R.drawable.cruz);
-				seleccionado[w][z]=2;
-				boton[w][z].setEnabled(false);
+		switch (x) {
+		case 0:
+			if(boton[x][y].isEnabled()==true){
+				boton[x][y].setBackgroundResource(R.drawable.cruz);
+				seleccionado[x][y]=2;
+				boton[x][y].setEnabled(false);
 			}else{
-				aleatorioA= (int) (Math.random()*a.length+0);
-				aleatorioB=(int) (Math.random()*b.length+0);
-				u=a[aleatorioA];
-				v=b[aleatorioB];
-				if(boton[u][v].isEnabled()==true&&boton[u][v]!=boton[w][z]){
-					boton[u][v].setBackgroundResource(R.drawable.cruz);
-					seleccionado[u][v]=2;
-					boton[u][v].setEnabled(false);
+				x=1;
+				if(boton[x][y].isEnabled()==true){
+					boton[x][y].setBackgroundResource(R.drawable.cruz);
+					seleccionado[x][y]=2;
+					boton[x][y].setEnabled(false);
+				}else{
+					x=2;
+					if(boton[x][y].isEnabled()==true){
+						boton[x][y].setBackgroundResource(R.drawable.cruz);
+						seleccionado[x][y]=2;
+						boton[x][y].setEnabled(false);	
+					}
 				}
 			}
+			break;
+		case 1:  
+			if(boton[x][y].isEnabled()==true){
+				boton[x][y].setBackgroundResource(R.drawable.cruz);
+				seleccionado[x][y]=2;
+				boton[x][y].setEnabled(false);
+			}else{
+				x=0;
+				if(boton[x][y].isEnabled()==true){
+					boton[x][y].setBackgroundResource(R.drawable.cruz);
+					seleccionado[x][y]=2;
+					boton[x][y].setEnabled(false);
+				}else{
+					x=2;
+					if(boton[x][y].isEnabled()==true){
+						boton[x][y].setBackgroundResource(R.drawable.cruz);
+						seleccionado[x][y]=2;
+						boton[x][y].setEnabled(false);	
+					}
+				}
+			}
+			break;
+		case 2:  
+			if(boton[x][y].isEnabled()==true){
+				boton[x][y].setBackgroundResource(R.drawable.cruz);
+				seleccionado[x][y]=2;
+				boton[x][y].setEnabled(false);
+			}else{
+				x=0;
+				if(boton[x][y].isEnabled()==true){
+					boton[x][y].setBackgroundResource(R.drawable.cruz);
+					seleccionado[x][y]=2;
+					boton[x][y].setEnabled(false);
+				}else{
+					x=1;
+					if(boton[x][y].isEnabled()==true){
+						boton[x][y].setBackgroundResource(R.drawable.cruz);
+						seleccionado[x][y]=2;
+						boton[x][y].setEnabled(false);	
+					}
+				}
+			}
+			break;
+		default: 
+			if(boton[x][y].isEnabled()==true){
+				boton[x][y].setBackgroundResource(R.drawable.cruz);
+				seleccionado[x][y]=2;
+				boton[x][y].setEnabled(false);
+			}else{
+				x=0;
+				if(boton[x][y].isEnabled()==true){
+					boton[x][y].setBackgroundResource(R.drawable.cruz);
+					seleccionado[x][y]=2;
+					boton[x][y].setEnabled(false);
+				}else{
+					x=1;
+					if(boton[x][y].isEnabled()==true){
+						boton[x][y].setBackgroundResource(R.drawable.cruz);
+						seleccionado[x][y]=2;
+						boton[x][y].setEnabled(false);	
+					}else{
+						x=2;
+						if(boton[x][y].isEnabled()==true){
+							boton[x][y].setBackgroundResource(R.drawable.cruz);
+							seleccionado[x][y]=2;
+							boton[x][y].setEnabled(false);	
+						}
+					}
+				}
+			}
+			break;
 		}
 	}
 
@@ -172,6 +239,8 @@ public class Juego1 extends Activity {
 				}
 			});
 			dialogo.show();
+			if(devolverTurno()==2)
+				turno=1;
 		}
 	}
 
@@ -210,6 +279,8 @@ public class Juego1 extends Activity {
 			}
 		});
 		dialogo.show();
+		if(devolverTurno()==2)
+			turno=1;
 	}
 
 	public boolean onKeyDown(int keyCode, KeyEvent event) {

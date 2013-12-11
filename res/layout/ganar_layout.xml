@@ -38,7 +38,7 @@
         android:layout_alignParentRight="true"
         android:layout_below="@+id/textView2"
         android:background="#F5FFFA"
-        android:lines="3"
+        android:lines="4"
         android:textColor="#006400"
         android:textSize="18sp"
         android:textStyle="italic" />

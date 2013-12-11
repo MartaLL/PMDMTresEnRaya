@@ -137,6 +137,8 @@ public class Juego2 extends Activity {
 				}
 			});
 			dialogo.show();
+			if(devolverTurno()==2)
+				turno=1;
 		}
 	}
 	
@@ -175,6 +177,8 @@ public class Juego2 extends Activity {
 			}
 		});
 		dialogo.show();
+		if(devolverTurno()==2)
+			turno=1;
 	}
 
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
